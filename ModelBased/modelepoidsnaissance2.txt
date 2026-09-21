@@ -1,0 +1,18 @@
+model { 
+ for(i in 1 : N)
+      {
+        poids[i] ~ dnorm(mu[i], tau)
+        mu[i] <- moyennes[sexe[i]] 
+          + p_tm * tailmere[i] + p_cj * cigjour[i] + p_ag * (agegest[i] - agegestm)
+      }
+      moyennes[1] ~ dunif(2500, 5000)
+      moyennes[2] ~ dunif(2500, 5000)
+      tau <- 1/(sigma^2)
+      sigma ~ dunif(200, 800)
+      
+      agegestm <- mean(agegest)
+      
+      p_tm ~ dunif(0, 100)
+      p_cj ~ dunif(0, 100)
+      p_ag ~ dunif(0, 1000)
+}
